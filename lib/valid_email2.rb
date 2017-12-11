@@ -10,4 +10,9 @@ module ValidEmail2
     blacklist_file = "vendor/blacklist.yml"
     @@blacklist ||= File.exists?(blacklist_file) ? YAML.load_file(File.expand_path(blacklist_file)) : []
   end
+
+  def self.add_allowed_domain(domain)
+    disposable_emails # ensure it loads the list of disposable emails
+    @@disposable_emails.delete(domain)
+  end
 end

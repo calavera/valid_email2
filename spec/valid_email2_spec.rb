@@ -115,4 +115,14 @@ describe ValidEmail2 do
       expect(user.valid?).to be_falsey
     end
   end
+
+  describe "add_allowed_domain" do
+    it "should remove a domain from the disposable emails list" do
+      expect(ValidEmail2.disposable_emails).to include("protonmail.com")
+      ValidEmail2.add_allowed_domain("protonmail.com")
+      expect(ValidEmail2.disposable_emails).not_to include("protonmail.com")
+      user = TestUserDisallowDisposable.new(email: "foo@protonmail.com")
+      expect(user.valid?).to be_truthy
+    end
+  end
 end
